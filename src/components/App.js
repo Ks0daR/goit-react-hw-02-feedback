@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Layout from './Layout';
 import Statistics from './Statistics';
 import FeedbackOptions from './FeedbackOptions';
@@ -11,6 +11,12 @@ export default class App extends Component {
     neutral: 0,
     bad: 0,
   };
+
+  static propTypes = {
+    good: PropTypes.number.isRequired,
+    neutral: PropTypes.number.isRequired,
+    bad: PropTypes.number.isRequired
+  }
 
   state = {
     good: this.props.good,
@@ -38,24 +44,30 @@ export default class App extends Component {
     const positiveFeedback = this.countPositiveFeedbackPercentage(
       totalFeedback,
     );
+    const message = <div>No feedback given</div>;
     const { good, neutral, bad } = this.state;
     return (
       <Layout>
-        
-          <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={totalFeedback}
-            positivePercentage={positiveFeedback}
-          />
-        
-        
+        <Section title="Statistic">
+          {totalFeedback > 0 ? (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={totalFeedback}
+              positivePercentage={positiveFeedback}
+            />
+          ) : (
+            message
+          )}
+        </Section>
+
+        <Section title="Feedback">
           <FeedbackOptions
             options={Object.keys(this.state)}
             onLeaveFeedback={this.handleIncement}
           />
-       
+        </Section>
       </Layout>
     );
   }
