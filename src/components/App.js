@@ -1,27 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Layout from './Layout';
 import Statistics from './Statistics';
 import FeedbackOptions from './FeedbackOptions';
 import Section from './Section';
 
 export default class App extends Component {
-  static defaultProps = {
+  state = {
     good: 0,
     neutral: 0,
     bad: 0,
-  };
-
-  static propTypes = {
-    good: PropTypes.number.isRequired,
-    neutral: PropTypes.number.isRequired,
-    bad: PropTypes.number.isRequired
-  }
-
-  state = {
-    good: this.props.good,
-    neutral: this.props.neutral,
-    bad: this.props.bad,
   };
 
   handleIncement = ({ target }) => {
@@ -46,6 +33,7 @@ export default class App extends Component {
     );
     const message = <div>No feedback given</div>;
     const { good, neutral, bad } = this.state;
+    console.log(this.state)
     return (
       <Layout>
         <Section title="Statistic">
